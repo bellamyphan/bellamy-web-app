@@ -2,6 +2,7 @@ package com.bellamyphan.spring_backend.config;
 
 import com.bellamyphan.spring_backend.service.BankTypeService;
 import com.bellamyphan.spring_backend.service.RoleService;
+import com.bellamyphan.spring_backend.service.TransactionTypeService;
 import com.bellamyphan.spring_backend.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -17,6 +18,7 @@ public class InitialDataConfig {
     private final RoleService roleService;
     private final UserService userService;
     private final BankTypeService bankTypeService;
+    private final TransactionTypeService transactionTypeService;
     private static final Logger logger = LoggerFactory.getLogger(InitialDataConfig.class);
 
     @Bean
@@ -30,6 +32,9 @@ public class InitialDataConfig {
 
             logger.info("Creating bank types...");
             bankTypeService.createFirstBankType();
+
+            logger.info("Creating transaction types...");
+            transactionTypeService.createFirstTransactionType();
         };
     }
 }
