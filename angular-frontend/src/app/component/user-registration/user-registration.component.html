@@ -1,1 +1,20 @@
-<p>user-registration works!</p>
+<h2>User Registration</h2>
+<form (ngSubmit)="registerUser()" #registrationForm="ngForm">
+  <div>
+    <label for="firstName">First Name:</label>
+    <input type="text" id="firstName" name="firstName" [(ngModel)]="user.firstName" required />
+  </div>
+  <div>
+    <label for="lastName">Last Name:</label>
+    <input type="text" id="lastName" name="lastName" [(ngModel)]="user.lastName" required />
+  </div>
+  <div>
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" [(ngModel)]="user.username" required />
+  </div>
+  <div>
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" [(ngModel)]="user.password" required />
+  </div>
+  <button type="submit">Register</button>
+</form>
