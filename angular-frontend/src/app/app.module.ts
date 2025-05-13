@@ -6,14 +6,16 @@ import { AppComponent } from './app.component';
 import { MainMenuComponent } from './component/main-menu/main-menu.component';
 import { UserRegistrationComponent } from './component/user-registration/user-registration.component';
 import { UserLoginComponent } from './component/user-login/user-login.component';
-import { provideHttpClient } from '@angular/common/http'; // ✅ New import
+import { provideHttpClient } from '@angular/common/http';
+import { TransactionListComponent } from './component/transaction-list/transaction-list.component'; // ✅ New import
 
 @NgModule({
   declarations: [
     AppComponent,
     MainMenuComponent,
     UserRegistrationComponent,
-    UserLoginComponent
+    UserLoginComponent,
+    TransactionListComponent
   ],
   imports: [
     BrowserModule,

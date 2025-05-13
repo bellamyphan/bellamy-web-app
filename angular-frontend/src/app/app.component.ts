@@ -19,7 +19,7 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Subscribe to the username$ Observable to update email dynamically
+    // Subscribe to the username$ Observable to update username dynamically
     this.authService.username$.subscribe((username) => {
       this.username = username;
     });
