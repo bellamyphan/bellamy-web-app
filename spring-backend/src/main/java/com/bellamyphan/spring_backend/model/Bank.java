@@ -31,11 +31,17 @@ public class Bank {
     @JoinColumn(name = "type_id", referencedColumnName = "id") // Foreign key column in 'transaction_banks' table
     private BankType type;
 
+    // Many-to-one relationship with User (each bank has one user)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", referencedColumnName = "id") // Foreign key to the User table
+    private User user;
+
     // Constructor with parameters excluding id
-    public Bank(String name, LocalDate openingDate, LocalDate closingDate, BankType type) {
+    public Bank(String name, LocalDate openingDate, LocalDate closingDate, BankType type, User user) {
         this.name = name;
         this.openingDate = openingDate;
         this.closingDate = closingDate;
         this.type = type;
+        this.user = user;
     }
 }
