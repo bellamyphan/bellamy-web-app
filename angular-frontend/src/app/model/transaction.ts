@@ -1,5 +1,7 @@
 // transaction.model.ts
 
+import { Bank } from './bank';
+
 export class Transaction {
   id!: number;
   date!: Date;
@@ -7,19 +9,6 @@ export class Transaction {
   type?: TransactionType;  // Optional, Reference to TransactionType object
   notes?: string;           // Optional notes field
   bank?: Bank;              // Optional Bank object
-}
-
-export class Bank {
-  id!: number;
-  name!: string;
-  openingDate!: Date;
-  closingDate?: Date;  // Optional closingDate
-  type!: BankType;     // Reference to BankType object
-}
-
-export class BankType {
-  id!: number;
-  type!: string;
 }
 
 export class TransactionType {
