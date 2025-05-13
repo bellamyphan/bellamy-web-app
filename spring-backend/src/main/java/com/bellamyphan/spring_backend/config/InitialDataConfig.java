@@ -1,5 +1,6 @@
 package com.bellamyphan.spring_backend.config;
 
+import com.bellamyphan.spring_backend.service.BankTypeService;
 import com.bellamyphan.spring_backend.service.RoleService;
 import com.bellamyphan.spring_backend.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,7 @@ public class InitialDataConfig {
 
     private final RoleService roleService;
     private final UserService userService;
+    private final BankTypeService bankTypeService;
     private static final Logger logger = LoggerFactory.getLogger(InitialDataConfig.class);
 
     @Bean
@@ -25,6 +27,9 @@ public class InitialDataConfig {
 
             logger.info("Creating first user...");
             userService.createFirstUser();
+
+            logger.info("Creating bank types...");
+            bankTypeService.createFirstBankType();
         };
     }
 }
