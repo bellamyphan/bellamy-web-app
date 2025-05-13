@@ -16,18 +16,20 @@
         <span class="navbar-text text-light">Current User: <strong>[Placeholder]</strong></span>
       </li>
       <li class="nav-item">
-        <button class="btn btn-light btn-sm">Log In</button>
+        <button class="btn btn-light btn-sm" (click)="onLogIn()">Log In</button>
       </li>
     </ul>
   </div>
 </nav>
 
-<div class="content-wrapper mt-5 pt-1 mb-5">
-  <div class="container mt-4">
+<!-- Content Wrapper with Flex Centering and Adjustment for Fixed Navbar -->
+<div class="content-wrapper d-flex justify-content-center align-items-center" style="min-height: calc(100vh - 56px);">
+  <div class="container">
     <router-outlet></router-outlet>
   </div>
 </div>
 
+<!-- Footer stays fixed at the bottom -->
 <footer class="bg-primary text-light fixed-bottom">
   <div class="container text-center py-2">
     <small>

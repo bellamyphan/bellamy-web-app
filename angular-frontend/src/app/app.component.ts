@@ -8,4 +8,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'angular-frontend';
+
+  onLogIn(): void {
+    // Navigate to the user login page
+    window.location.href = '/user-login';
+  }
 }
