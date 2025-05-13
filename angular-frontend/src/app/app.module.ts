@@ -10,6 +10,7 @@ import { UserLoginComponent } from './component/user-login/user-login.component'
 import { AuthInterceptor } from './interceptor/auth.interceptor';
 import { MainMenuComponent } from './component/main-menu/main-menu.component';
 import { UserRegistrationComponent } from './component/user-registration/user-registration.component';
+import { TransactionCreateComponent } from './component/transaction-create/transaction-create.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { UserRegistrationComponent } from './component/user-registration/user-re
     TransactionListComponent,
     UserLoginComponent,
     MainMenuComponent,
-    UserRegistrationComponent
+    UserRegistrationComponent,
+    TransactionCreateComponent
   ],
   imports: [
     BrowserModule, // Import BrowserModule for browser-specific features
