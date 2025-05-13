@@ -8,4 +8,13 @@ import { Component } from '@angular/core';
 })
 export class MainMenuComponent {
 
+  sendEmail(): void {
+    const subject = 'Hello Bellamy from the Bellamy Web App';
+    const body = 'I hope you are doing well. This is a test email from the Bellamy Web App.';
+    const mailtoLink = `mailto:bellamyphan@icloud.com
+      ?subject=${encodeURIComponent(subject)}
+      &body=${encodeURIComponent(body)}`;
+      window.location.href = mailtoLink;
+  }
+
 }
