@@ -10,11 +10,11 @@ import { AppConfig } from '../app-config';
 export class AuthenticationService {
 
   private baseUrl = AppConfig.springApiUrl + "/api/auth/login"; // Base URL for the Auth API
-  private usernameSubject = new BehaviorSubject<string | null>(null); // Subject to hold user email
-  username$ = this.usernameSubject.asObservable(); // Observable for user email
+  private usernameSubject = new BehaviorSubject<string | null>(null); // Subject to hold username
+  username$ = this.usernameSubject.asObservable(); // Observable for username
 
   constructor(private http: HttpClient) { 
-    this.loadUserFromToken(); // Load user email from token on service initialization
+    this.loadUserFromToken(); // Load username from token on service initialization
   }
 
   // Retrieve the JWT token from localStorage
@@ -28,7 +28,7 @@ export class AuthenticationService {
     this.loadUserFromToken(); // Load username from token after storing it
   }
 
-  // Login method, it sends the email and password to the backend
+  // Login method, it sends the username and password to the backend
   login(username: string, password: string): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -39,10 +39,10 @@ export class AuthenticationService {
   // Clear the token from localStorage when the user logs out
   logout(): void {
     localStorage.removeItem('jwt_token');
-    this.usernameSubject.next(null); // Clear the email from BehaviorSubject
+    this.usernameSubject.next(null); // Clear the username from BehaviorSubject
   }
 
-  // Load user email from the JWT token and update the BehaviorSubject
+  // Load username from the JWT token and update the BehaviorSubject
   private loadUserFromToken(): void {
     const token = this.getToken();
     if (token) {
@@ -52,14 +52,14 @@ export class AuthenticationService {
         if (isExpired) {
           this.logout(); // Logout if token is expired
         } else {
-          this.usernameSubject.next(decodedToken.sub); // Update the BehaviorSubject with the email
+          this.usernameSubject.next(decodedToken.sub); // Update the BehaviorSubject with the username
         }
       } catch (error) {
         console.error('Error decoding token:', error);
-        this.usernameSubject.next(null); // Set email to null if token is invalid
+        this.usernameSubject.next(null); // Set username to null if token is invalid
       }
     } else {
-      this.usernameSubject.next(null); // Set email to null if no token
+      this.usernameSubject.next(null); // Set username to null if no token
     }
   }
 }
