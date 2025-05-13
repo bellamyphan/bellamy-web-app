@@ -12,11 +12,12 @@
 
     <!-- Right-aligned links -->
     <ul class="navbar-nav d-flex gap-3">
-      <li class="nav-item">
-        <span class="navbar-text text-light">Current User: <strong>[Placeholder]</strong></span>
+      <li class="nav-item" *ngIf="username">
+        <span class="navbar-text text-light">Current User: <strong>{{ username }}</strong></span>
       </li>
       <li class="nav-item">
-        <button class="btn btn-light btn-sm" (click)="onLogIn()">Log In</button>
+        <button *ngIf="!username" class="btn btn-light btn-sm" (click)="toggleLoginLogout()">Log In</button>
+        <button *ngIf="username" class="btn btn-light btn-sm" (click)="toggleLoginLogout()">Log Out</button>
       </li>
     </ul>
   </div>
