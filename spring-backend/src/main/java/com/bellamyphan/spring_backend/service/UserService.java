@@ -31,6 +31,7 @@ public class UserService implements UserDetailsService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final RoleRepository roleRepository;
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
+
     @Value("${default.admin.username}")
     private String defaultAdminUsername;
     @Value("${default.admin.password}")
@@ -39,6 +40,21 @@ public class UserService implements UserDetailsService {
     private String defaultAdminFirstname;
     @Value("${default.admin.lastname}")
     private String defaultAdminLastname;
+
+    @Transactional
+    public User saveUser(User user) {
+        if (userRepository.findByUsername(user.getUsername()).isPresent()) {
+            throw new IllegalArgumentException("Username already registered by another user");
+        }
+        // Encode the password
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        // Assign default role
+        Role userRole = roleRepository.findByName("ROLE_USER")
+                .orElseThrow(() -> new IllegalStateException("Default role not found"));
+        user.setRoles(new HashSet<>(List.of(userRole)));
+        // Save the user to the database
+        return userRepository.save(user);
+    }
 
     @Transactional
     public void createFirstUser() {
