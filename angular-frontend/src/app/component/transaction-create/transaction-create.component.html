@@ -1,26 +1,24 @@
 <div class="container mt-5">
     <div class="row justify-content-center">
-        <div class="col-md-6">
-            <h3 class="text-center mb-4">Create Transaction</h3>
+        <div class="col-md-8 col-lg-6">
+            <h3 class="text-center mb-4 text-primary">Create Transaction</h3>
 
-            <form (ngSubmit)="onSubmit()" #transactionForm="ngForm">
+            <form (ngSubmit)="onSubmit()" #transactionForm="ngForm" class="position-relative">
                 <!-- Date Field -->
-                <div class="form-group mb-3">
-                    <label for="date">Date</label>
-                    <input class="form-control" type="date" id="date" name="date" [(ngModel)]="transaction.date"
-                        required />
+                <div class="form-group mb-4">
+                    <label for="date" class="font-weight-bold">Date</label>
+                    <input class="form-control form-control-lg" type="date" id="date" name="date" [(ngModel)]="transaction.date" required />
                 </div>
 
                 <!-- Amount Field -->
-                <div class="form-group mb-3">
-                    <label for="amount">Amount</label>
-                    <input class="form-control" type="number" id="amount" name="amount" [(ngModel)]="transaction.amount"
-                        required />
+                <div class="form-group mb-4">
+                    <label for="amount" class="font-weight-bold">Amount</label>
+                    <input class="form-control form-control-lg" type="number" id="amount" name="amount" [(ngModel)]="transaction.amount" required />
                 </div>
 
-                <!-- Type Field -->
-                <div class="form-group mb-3">
-                    <label for="type">Type</label>
+                <!-- Type Field (ng-select) -->
+                <div class="form-group mb-4">
+                    <label for="type" class="font-weight-bold">Transaction Type</label>
                     <ng-select 
                         [items]="transactionTypes"
                         bindLabel="type" 
@@ -28,26 +26,29 @@
                         [(ngModel)]="transaction.type" 
                         name="type"
                         placeholder="Select Transaction Type"
-                        [searchable]="true">
+                        [searchable]="true"
+                        [dropdownPosition]="'bottom'"  
+                        [appendTo]="'body'" 
+                        class="form-control form-control-lg">
                     </ng-select>
                 </div>
 
                 <!-- Bank Field -->
-                <div class="form-group mb-3">
-                    <label for="bank">Bank</label>
-                    <input class="form-control" type="text" id="bank" name="bank" [(ngModel)]="transaction.bank"
-                        required />
+                <div class="form-group mb-4">
+                    <label for="bank" class="font-weight-bold">Bank</label>
+                    <input class="form-control form-control-lg" type="text" id="bank" name="bank" [(ngModel)]="transaction.bank" required />
                 </div>
 
                 <!-- Notes Field -->
-                <div class="form-group mb-3">
-                    <label for="notes">Notes</label>
-                    <textarea class="form-control" id="notes" name="notes" [(ngModel)]="transaction.notes"
-                        rows="3"></textarea>
+                <div class="form-group mb-4">
+                    <label for="notes" class="font-weight-bold">Notes</label>
+                    <textarea class="form-control form-control-lg" id="notes" name="notes" [(ngModel)]="transaction.notes" rows="4"></textarea>
                 </div>
 
                 <!-- Submit Button -->
-                <button class="btn btn-primary btn-block" type="submit" [disabled]="!transactionForm.form.valid">Submit</button>
+                <button class="btn btn-primary btn-block btn-lg" type="submit" [disabled]="!transactionForm.form.valid">
+                    Submit
+                </button>
             </form>
         </div>
     </div>

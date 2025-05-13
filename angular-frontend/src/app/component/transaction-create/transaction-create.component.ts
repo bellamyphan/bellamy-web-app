@@ -18,28 +18,29 @@ export class TransactionCreateComponent implements OnInit {
   transactionTypes: TransactionType[] = []; // Array to store transaction types
 
   constructor(
-    private transactionService: TransactionService, 
-    private transactionTypeService: TransactionTypeService, 
+    private transactionService: TransactionService,
+    private transactionTypeService: TransactionTypeService,
     private router: Router
   ) { }
 
   ngOnInit() {
-    this.loadTransactionTypes(); // Load transaction types when component initializes
+    // Load transaction types
+    this.loadTransactionTypes();
   }
 
   // Load transaction types from the service
   loadTransactionTypes() {
-  this.transactionTypeService.getTransactionTypes().subscribe(
-    (types: TransactionType[]) => {
-      console.log('Fetched transaction types:', types); // Print fetched types
-      this.transactionTypes = types;
-      console.log('Assigned transaction types:', this.transactionTypes); // Print assigned transaction types
-    },
-    (error) => {
-      console.error('Error fetching transaction types:', error);
-    }
-  );
-}
+    this.transactionTypeService.getTransactionTypes().subscribe(
+      (types: TransactionType[]) => {
+        console.log('Fetched transaction types:', types); // Print fetched types
+        this.transactionTypes = types;
+        console.log('Assigned transaction types:', this.transactionTypes); // Print assigned transaction types
+      },
+      (error) => {
+        console.error('Error fetching transaction types:', error);
+      }
+    );
+  }
 
   // Method to save the transaction
   async saveTransaction() {
