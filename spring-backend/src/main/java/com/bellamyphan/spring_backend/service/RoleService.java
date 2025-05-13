@@ -36,7 +36,7 @@ public class RoleService {
     private Role createRoleIfNotExists(String roleName) {
         return roleRepository.findByName(roleName)
                 .map(existingRole -> {
-                    logger.debug("Role '{}' already exists", roleName);
+                    logger.info("Role '{}' already exists", roleName);
                     return existingRole;
                 })
                 .orElseGet(() -> {
