@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule, provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http'; // Import HttpClientModule
+import { NgSelectModule } from '@ng-select/ng-select';  // Import NgSelectModule
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -25,7 +26,8 @@ import { TransactionCreateComponent } from './component/transaction-create/trans
     BrowserModule, // Import BrowserModule for browser-specific features
     AppRoutingModule, // Import the routing module for navigation
     FormsModule, // Import FormsModule for template-driven forms
-    HttpClientModule // Add HttpClientModule here
+    HttpClientModule, // Add HttpClientModule here
+    NgSelectModule, 
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }, // Register the interceptor

@@ -1,20 +1,45 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Transaction } from '../../model/transaction';
 import { TransactionService } from '../../service/transaction.service';
+import { TransactionTypeService } from '../../service/transaction-type.service'; // Import the service
 import { Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
+import { TransactionType } from '../../model/transaction';
 
 @Component({
   selector: 'app-transaction-create',
   standalone: false,
   templateUrl: './transaction-create.component.html',
-  styleUrl: './transaction-create.component.css'
+  styleUrls: ['./transaction-create.component.css']
 })
-export class TransactionCreateComponent {
+export class TransactionCreateComponent implements OnInit {
 
   transaction: Transaction = new Transaction();
+  transactionTypes: TransactionType[] = []; // Array to store transaction types
 
-  constructor(private transactionService: TransactionService, private router: Router) { }
+  constructor(
+    private transactionService: TransactionService, 
+    private transactionTypeService: TransactionTypeService, 
+    private router: Router
+  ) { }
+
+  ngOnInit() {
+    this.loadTransactionTypes(); // Load transaction types when component initializes
+  }
+
+  // Load transaction types from the service
+  loadTransactionTypes() {
+  this.transactionTypeService.getTransactionTypes().subscribe(
+    (types: TransactionType[]) => {
+      console.log('Fetched transaction types:', types); // Print fetched types
+      this.transactionTypes = types;
+      console.log('Assigned transaction types:', this.transactionTypes); // Print assigned transaction types
+    },
+    (error) => {
+      console.error('Error fetching transaction types:', error);
+    }
+  );
+}
 
   // Method to save the transaction
   async saveTransaction() {
