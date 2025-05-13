@@ -26,7 +26,7 @@ public class Transaction {
     private Double amount;
 
     // Some transactions do not have a type, only track the bank for bank balances
-    @ManyToOne(optional = false, fetch = FetchType.LAZY) // Foreign key relationship
+    @ManyToOne(fetch = FetchType.LAZY) // Foreign key relationship
     @JoinColumn(name = "type_id", referencedColumnName = "id") // Foreign key column in 'transactions' table
     private TransactionType type;
 
