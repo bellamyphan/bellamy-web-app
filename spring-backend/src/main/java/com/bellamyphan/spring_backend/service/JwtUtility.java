@@ -4,6 +4,7 @@ import com.bellamyphan.spring_backend.model.Role;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,9 +18,20 @@ import java.util.stream.Collectors;
 public class JwtUtility {
 
     private static final Logger logger = LoggerFactory.getLogger(JwtUtility.class);
-    @Value("${jwt.secret}")
-    private static String secreteKey;
-    private final static Key KEY = Keys.hmacShaKeyFor(secreteKey.getBytes());
+
+    private Key ENCRYPTED_KEY;
+
+    @Value("${JWT_SECRET}")
+    private String jwtSecret;
+
+    @PostConstruct
+    public void init() {
+        if (jwtSecret == null || jwtSecret.isEmpty()) {
+            throw new RuntimeException("JWT_SECRET environment variable is not set");
+        }
+        String SECRET_KEY = jwtSecret;
+        ENCRYPTED_KEY = Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
+    }
 
     public String generateToken(String username, Set<Role> roles) {
         Map<String, Object> claims = new HashMap<>();
@@ -33,7 +45,7 @@ public class JwtUtility {
                 .setSubject(username)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 30)) // 30 minutes
-                .signWith(KEY)
+                .signWith(ENCRYPTED_KEY)
                 .compact();
     }
 
@@ -52,7 +64,7 @@ public class JwtUtility {
 
     public Set<String> extractRoles(String token) {
         Claims claims = Jwts.parserBuilder()
-                .setSigningKey(KEY)
+                .setSigningKey(ENCRYPTED_KEY)
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
@@ -71,7 +83,7 @@ public class JwtUtility {
 
     private Date extractExpiration(String token) {
         return Jwts.parserBuilder()
-                .setSigningKey(KEY)
+                .setSigningKey(ENCRYPTED_KEY)
                 .build()
                 .parseClaimsJws(token)
                 .getBody()
@@ -80,7 +92,7 @@ public class JwtUtility {
 
     private String extractUsername(String token) {
         Claims claims = Jwts.parserBuilder()
-                .setSigningKey(KEY)
+                .setSigningKey(ENCRYPTED_KEY)
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
