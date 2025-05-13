@@ -16,6 +16,7 @@ export class TransactionCreateComponent {
 
   constructor(private transactionService: TransactionService, private router: Router) { }
 
+  // Method to save the transaction
   async saveTransaction() {
     try {
       const data = await firstValueFrom(this.transactionService.createTransaction(this.transaction));
@@ -26,14 +27,14 @@ export class TransactionCreateComponent {
     }
   }
 
-  // This method is used to navigate to the transaction list page
+  // Navigate to transaction list
   goToTransactionList() {
     this.router.navigate(['/transactions']);
   }
 
-  // This method is called when the form is submitted
+  // Method called when the form is submitted
   onSubmit() {
-    console.log('Transaction created:', this.transaction);
+    console.log('Transaction submitted:', this.transaction);
     this.saveTransaction();
   }
 }
