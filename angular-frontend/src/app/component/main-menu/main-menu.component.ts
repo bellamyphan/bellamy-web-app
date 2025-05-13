@@ -8,6 +8,11 @@ import { Component } from '@angular/core';
 })
 export class MainMenuComponent {
 
+  userRegistration(): void {
+    // Navigate to the user registration page
+    window.location.href = '/user-registration';
+  }
+
   sendEmail(): void {
     const subject = 'Hello Bellamy from the Bellamy Web App';
     const body = 'I hope you are doing well. This is a test email from the Bellamy Web App.';
