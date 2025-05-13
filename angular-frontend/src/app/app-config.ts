@@ -8,7 +8,7 @@ export const AppConfig = {
       return 'http://localhost:8080';
     } else {
       // Production environment
-      return 'http://spring-money-app-env.eba-trinnfcp.us-east-2.elasticbeanstalk.com';
+      return 'http://bellamy-spring.us-east-2.elasticbeanstalk.com';
     }
   }
   

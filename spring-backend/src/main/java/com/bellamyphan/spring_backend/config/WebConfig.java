@@ -32,7 +32,7 @@ public class WebConfig implements WebMvcConfigurer {
         // Allow cross-origin requests for all endpoints under /api/**
         registry.addMapping("/api/**")
                 .allowedOrigins(allowedOrigins)
-                .allowedMethods("GET", "POST", "PUT", "DELETE")
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
                 .allowCredentials(true);
         logger.debug("CORS configuration for /api/** set with allowed origins: {}", (Object) allowedOrigins);

@@ -25,7 +25,8 @@ public class SecurityConfig {
         logger.info("Initializing security filter chain configuration");
 
         http
-                .cors(cors -> logger.debug("CORS enabled with default settings"))
+                .cors(cors ->
+                        cors.configurationSource(new WebConfig().corsConfigurationSource())) // ✅ tell security to use CORS settings
                 .csrf(csrf -> {
                     csrf.disable();
                     logger.debug("CSRF protection disabled (JWT stateless)");
