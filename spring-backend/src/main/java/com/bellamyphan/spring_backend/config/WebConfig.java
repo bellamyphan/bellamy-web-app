@@ -21,7 +21,8 @@ public class WebConfig implements WebMvcConfigurer {
     String[] allowedOrigins = {
             "http://localhost:4200",
             "http://frontend:4200",
-            "http://angular-money-app.s3-website.us-east-2.amazonaws.com"
+            "http://angular-money-app.s3-website.us-east-2.amazonaws.com",
+            "http://bellamy-web-angular.s3-website.us-east-2.amazonaws.com"
     };
 
     @Override
