@@ -1,9 +1,13 @@
 package com.bellamyphan.spring_backend.controller;
 
+import com.bellamyphan.spring_backend.dto.TransactionDto;
 import com.bellamyphan.spring_backend.exception.ResourceNotFoundException;
 import com.bellamyphan.spring_backend.model.Transaction;
 import com.bellamyphan.spring_backend.repository.TransactionRepository;
+import com.bellamyphan.spring_backend.service.DtoMapperService;
+import com.bellamyphan.spring_backend.service.TransactionService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +21,8 @@ import java.util.Map;
 public class TransactionController {
 
     private final TransactionRepository transactionRepository;
+    private final TransactionService transactionService;
+    private final DtoMapperService dtoMapperService;
 
     // Get all transactions
     @GetMapping
@@ -34,8 +40,10 @@ public class TransactionController {
 
     // Create a new transaction
     @PostMapping
-    public Transaction createTransaction(@RequestBody Transaction transaction) {
-        return transactionRepository.save(transaction);
+    public ResponseEntity<TransactionDto> createTransaction(@RequestBody Transaction transaction) {
+        Transaction createdTransaction = transactionService.createTransaction(transaction);
+        TransactionDto dto = dtoMapperService.transactionMappingToDto(createdTransaction);
+        return ResponseEntity.status(HttpStatus.CREATED).body(dto);
     }
 
     // Update a transaction by ID

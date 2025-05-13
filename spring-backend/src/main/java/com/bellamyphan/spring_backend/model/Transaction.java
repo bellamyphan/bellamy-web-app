@@ -38,12 +38,18 @@ public class Transaction {
     @JoinColumn(name = "bank_id", referencedColumnName = "id") // Foreign key column in 'transactions' table
     private Bank bank;
 
+    // Each transaction must be associated to a user
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
+    private User user;
+
     // Constructor with parameters excluding id
-    public Transaction(LocalDate date, Double amount, TransactionType type, String notes, Bank bank) {
+    public Transaction(LocalDate date, Double amount, TransactionType type, String notes, Bank bank, User user) {
         this.date = date;
         this.amount = amount;
         this.type = type;
         this.notes = notes;
         this.bank = bank;
+        this.user = user;
     }
 }
