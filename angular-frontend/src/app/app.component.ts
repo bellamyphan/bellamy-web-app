@@ -29,10 +29,11 @@ export class AppComponent implements OnInit {
     if (this.username) {
       // If the user is logged in, log them out
       this.authService.logout();
-      this.router.navigate(['/user-login']);
+      alert('You have been logged out successfully!'); // Show alert for logout
+      this.router.navigate(['/main-menu']); // Navigate to the main menu after logout
     } else {
       // If no user is logged in, navigate to the login page
-      this.router.navigate(['/user-login']);
+      this.router.navigate(['/user-login']); // Navigate to the login page if not logged in
     }
   }
 }
