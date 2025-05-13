@@ -13,7 +13,7 @@ public class Role {
 
     @Id
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
-    private Long is;
+    private Long id;
 
     @Column(name = "name", nullable = false, unique = true)
     @NotBlank(message = "Role name is required")
