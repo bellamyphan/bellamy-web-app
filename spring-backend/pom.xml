@@ -28,6 +28,14 @@
 	</scm>
 	<properties>
 		<java.version>21</java.version>
+		<jwt.secret>${env.JWT_SECRET}</jwt.secret>
+		<default.admin.username>${env.DEFAULT_ADMIN_USERNAME}</default.admin.username>
+		<default.admin.password>${env.DEFAULT_ADMIN_PASSWORD}</default.admin.password>
+		<default.admin.firstname>${env.DEFAULT_ADMIN_FIRSTNAME}</default.admin.firstname>
+		<default.admin.lastname>${env.DEFAULT_ADMIN_LASTNAME}</default.admin.lastname>
+		<db.url>${env.DB_URL}</db.url>
+		<db.username>${env.DB_USERNAME}</db.username>
+		<db.password>${env.DB_PASSWORD}</db.password>
 	</properties>
 	<dependencies>
 		<dependency>
