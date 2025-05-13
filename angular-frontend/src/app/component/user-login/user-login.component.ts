@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthenticationService } from '../../service/authentication.service';
 
 @Component({
   selector: 'app-user-login',
@@ -11,19 +12,32 @@ export class UserLoginComponent {
 
   username: string = '';
   password: string = '';
+  errorMessage: string = '';
 
-  constructor(private router: Router) {}
+  constructor(
+    private authService: AuthenticationService,
+    private router: Router) { }
 
-  onSubmit() {
-    // Normally you would send a request to your server to authenticate the user
-    // For now, let's just log the credentials and navigate on success
-    if (this.username === 'testuser' && this.password === 'testpassword') {
-      console.log('Logged in successfully');
-      // Navigate to the main menu or home page after login
-      this.router.navigate(['/main-menu']);
-    } else {
-      alert('Invalid credentials');
-    }
+
+  onLogin(): void {
+    // Call login method in AuthenticationService
+    this.authService.login(this.username, this.password).subscribe({
+      next: (response) => {
+        // Store token upon successful login
+        this.authService.storeToken(response.token);
+        console.log('Login successful, token stored:', response.token);
+        // Redirect to the homepage or dashboard
+        this.router.navigate(['/main-menu']).then(success => {
+          console.log('Navigation success:', success);
+        }).catch(err => {
+          console.error('Navigation error:', err);
+        });
+      },
+      error: (err) => {
+        this.errorMessage = 'Invalid username or password';
+        console.error('Login failed:', err);
+        this.password = ''; // Clear password field on error
+      }
+    });
   }
-
 }
