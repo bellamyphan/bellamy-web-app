@@ -13,6 +13,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     // JpaRepository provides basic CRUD operations
     // Additional custom queries can be defined here if needed
 
+    Optional<User> findByUsername(String userName);
+
     @Query("SELECT u FROM User u JOIN FETCH u.roles WHERE u.username = :username")
     Optional<User> findByUsernameWithRoles(@Param("username") String username);
 }
