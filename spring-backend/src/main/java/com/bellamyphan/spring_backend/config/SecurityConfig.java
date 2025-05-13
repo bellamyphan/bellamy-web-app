@@ -8,8 +8,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -19,39 +21,36 @@ public class SecurityConfig {
     private static final Logger logger = LoggerFactory.getLogger(SecurityConfig.class);
     private final TokenAuthorizationFilter tokenAuthorizationFilter;
 
-    // Define security filter chain: JWT auth, stateless, and role-based access control
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        logger.info("Initializing security filter chain configuration");
+        logger.info("Configuring security filter chain");
 
         http
-                .cors(cors ->
-                        cors.configurationSource(new WebConfig().corsConfigurationSource())) // ✅ tell security to use CORS settings
-                .csrf(csrf -> {
-                    csrf.disable();
-                    logger.debug("CSRF protection disabled (JWT stateless)");
-                })
-                .authorizeHttpRequests(auth -> {
-                    logger.debug("Defining authorization rules for endpoints");
-                    auth.requestMatchers("/api/auth/login").permitAll();
-                    logger.debug("Permitting unauthenticated access to /api/auth/login");
-                    auth.requestMatchers(HttpMethod.POST, "/api/users").permitAll();
-                    logger.debug("Permitting unauthenticated POST to /api/users");
-                    auth.requestMatchers(HttpMethod.GET, "/api/transactions/**").hasAnyRole("USER", "ADMIN");
-                    logger.debug("Permitting GET /api/transactions/** for USER and ADMIN roles");
-                    auth.requestMatchers("/api/transactions/**").hasRole("ADMIN");
-                    logger.debug("Restricting POST, PUT, DELETE /api/transactions/** to ADMIN role");
-                    auth.anyRequest().authenticated();
-                    logger.debug("All other requests require authentication");
-                })
-                .sessionManagement(session -> {
-                    session.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-                    logger.debug("Session management set to STATELESS");
-                })
-                .addFilterBefore(tokenAuthorizationFilter,
-                        org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter.class);
+                // Enable CORS using WebConfig's configuration
+                .cors(cors -> cors.configurationSource(new WebConfig().corsConfigurationSource()))
 
-        logger.info("Security filter chain successfully configured");
+                // Disable CSRF (not needed for stateless JWT)
+                .csrf(AbstractHttpConfigurer::disable)
+
+                // Define authorization rules
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/api/auth/login").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/users").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/transactions/**").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers("/api/transactions/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/banks/types/**").hasAnyRole("USER", "ADMIN")
+                        .anyRequest().authenticated()
+                )
+
+                // Make the session stateless (required for JWT)
+                .sessionManagement(session -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                )
+
+                // Add JWT token filter before the default username/password filter
+                .addFilterBefore(tokenAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
+
+        logger.info("Security configuration complete");
         return http.build();
     }
 }
