@@ -1,1 +1,46 @@
-<p>transaction-list works!</p>
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Transaction List</h2>
+    <div>
+        <button class="btn btn-success" routerLink="/transactions/new" style="margin-right: 10px;">Add Transaction</button>
+        <button class="btn btn-secondary" routerLink="/transactions/search" style="margin-right: 10px;">Search Transaction</button>
+        <button class="btn btn-warning" routerLink="/reports/monthly" style="margin-right: 10px;">Monthly Report</button>
+        <button class="btn btn-info" routerLink="/bank-balances">Bank Balances</button>
+    </div>
+</div>
+
+<!-- Show loading text until the data is available -->
+<div *ngIf="!(transactions$ | async); else dataLoaded">
+    <p>Loading transactions...</p>
+</div>
+
+<ng-template #dataLoaded>
+    <div class="scrollable-table-container">
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th style="width: 10%;">Date</th>
+                    <th style="width: 10%;">Amount</th>
+                    <th style="width: 10%;">Type</th>
+                    <th style="width: 40%;">Notes</th>
+                    <th style="width: 30%;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let transaction of transactions$ | async">
+                    <td>{{ transaction.date | date }}</td>
+                    <td>{{ transaction.amount | currency }}</td>
+                    <td>{{ transaction.type }}</td>
+                    <td>{{ transaction.notes }}</td>
+                    <td>
+                        <button class="btn btn-info" (click)="viewTransactionDetails(transaction.id)"
+                            style="margin-right: 10px;">Details</button>
+                        <button class="btn btn-primary" (click)="updateTransaction(transaction.id)"
+                            style="margin-right: 10px;">Update</button>
+                        <button class="btn btn-danger" (click)="deleteTransaction(transaction.id)">Delete</button>
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</ng-template>
