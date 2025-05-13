@@ -34,7 +34,7 @@ export const authGuard: CanActivateFn = (route, state) => {
   } else {
     console.warn('AuthGuard: No token found');
     alert('You are not logged in. Please log in to continue.'); // Show alert message for no token
-    router.navigate(['/login']); // Navigate to login if no token
+    router.navigate(['/user-login']); // Navigate to login if no token
     return false;
   }
 };
