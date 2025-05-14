@@ -38,7 +38,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/users").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/resume").permitAll()
                         .requestMatchers("/api/transactions/**").hasAnyRole("USER", "ADMIN")
-                        .requestMatchers(HttpMethod.GET, "/api/banks/types/**").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/banks/**").hasAnyRole("USER", "ADMIN")
                         .anyRequest().authenticated()
                 )
 
