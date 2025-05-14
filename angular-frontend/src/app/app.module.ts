@@ -12,6 +12,8 @@ import { AuthInterceptor } from './interceptor/auth.interceptor';
 import { MainMenuComponent } from './component/main-menu/main-menu.component';
 import { UserRegistrationComponent } from './component/user-registration/user-registration.component';
 import { TransactionCreateComponent } from './component/transaction-create/transaction-create.component';
+import { SquareComponent } from './component/square/square.component';
+import { BoardComponent } from './component/board/board.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { TransactionCreateComponent } from './component/transaction-create/trans
     UserLoginComponent,
     MainMenuComponent,
     UserRegistrationComponent,
-    TransactionCreateComponent
+    TransactionCreateComponent,
+    SquareComponent,
+    BoardComponent
   ],
   imports: [
     BrowserModule, // Import BrowserModule for browser-specific features
