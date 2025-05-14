@@ -11,6 +11,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -18,6 +19,10 @@ public class TransactionTypeService {
 
     private final TransactionTypeRepository transactionTypeRepository;
     private static final Logger logger = LoggerFactory.getLogger(TransactionTypeService.class);
+
+    public Optional<TransactionType> findById(Long id) {
+        return transactionTypeRepository.findById(id);
+    }
 
     @Transactional
     public void createFirstTransactionType() {
