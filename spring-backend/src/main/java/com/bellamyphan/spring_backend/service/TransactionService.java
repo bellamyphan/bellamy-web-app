@@ -25,6 +25,7 @@ public class TransactionService {
     private final BankTypeRepository bankTypeRepository;
     private final TransactionTypeRepository transactionTypeRepository;
     private final BankRepository bankRepository;
+    private final BankService bankService;
 
     public Transaction createTransaction(Transaction transaction) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -47,14 +48,18 @@ public class TransactionService {
         TransactionType transactionType = transactionTypeRepository.findById(1L).orElseThrow(
                 () -> new RuntimeException("TransactionType not found"));
         // Create a sample bank
-        Bank bank = new Bank(
-                "Sample Bank",
-                LocalDate.of(2020, 1, 1),
-                null,
-                bankType,
-                user
-        );
-        bank = bankRepository.save(bank);
+        List<Bank> banks = bankService.getBanksByUserId(user.getId());
+        if (banks.isEmpty()) {
+            Bank bank = new Bank(
+                    "Sample Bank",
+                    LocalDate.of(2020, 1, 1),
+                    null,
+                    bankType,
+                    user
+            );
+            bank = bankRepository.save(bank);
+            banks.add(bank);
+        }
         // Create 5 sample transactions
         List<Transaction> transactions = new LinkedList<>();
         for (int i = 1; i <= 5; i++) {
@@ -63,7 +68,7 @@ public class TransactionService {
                     100.0 * i,
                     transactionType,
                     "Sample transaction " + i,
-                    bank,
+                    banks.getFirst(),
                     user
             );
             transactions.add(transactionRepository.save(transaction));
