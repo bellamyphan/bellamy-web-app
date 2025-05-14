@@ -1,0 +1,13 @@
+/* Make the top bar sticky */
+.sticky-header {
+    position: sticky;
+    top: 0;
+    z-index: 3;
+    background-color: white;
+}
+
+/* Scrollable table container */
+.scrollable-table-container {
+    max-height: 500px; /* Adjust as needed */
+    overflow-y: auto;
+}
