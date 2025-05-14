@@ -19,6 +19,10 @@ export class BankService {
     return this.httpClient.get<BankType[]>(`${this.bankTypeUrl}`);
   }
 
+  getBanks(): Observable<Bank[]> {
+    return this.httpClient.get<Bank[]>(`${this.bankUrl}`);
+  }
+
   createBank(bank: Bank): Observable<Bank> { // Create a new bank
       return this.httpClient.post<Bank>(this.bankUrl, bank);
     }

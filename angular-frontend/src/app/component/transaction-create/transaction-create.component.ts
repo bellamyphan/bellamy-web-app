@@ -5,6 +5,8 @@ import { TransactionTypeService } from '../../service/transaction-type.service';
 import { Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { TransactionType } from '../../model/transaction';
+import { Bank } from '../../model/bank';
+import { BankService } from '../../service/bank.service';
 
 @Component({
   selector: 'app-transaction-create',
@@ -16,16 +18,18 @@ export class TransactionCreateComponent implements OnInit {
 
   transaction: Transaction = new Transaction();
   transactionTypes: TransactionType[] = []; // Array to store transaction types
+  banks: Bank[] = []; // Array to store banks
 
   constructor(
     private transactionService: TransactionService,
     private transactionTypeService: TransactionTypeService,
+    private bankService: BankService,
     private router: Router
   ) { }
 
   ngOnInit() {
-    // Load transaction types
     this.loadTransactionTypes();
+    this.loadBanks();
   }
 
   // Load transaction types from the service
@@ -35,11 +39,23 @@ export class TransactionCreateComponent implements OnInit {
         console.log('Fetched transaction types:', types); // Print fetched types
         this.transactionTypes = types;
         console.log('Assigned transaction types:', this.transactionTypes); // Print assigned transaction types
-      },
-      (error) => {
+      }, (error) => {
         console.error('Error fetching transaction types:', error);
       }
     );
+  }
+
+  // Load banks from the service
+  loadBanks() {
+    this.bankService.getBanks().subscribe(
+      (banks: Bank[]) => {
+        console.log('Fetched banks:', banks)
+        this.banks = banks;
+        console.log('Assigned banks:', this.banks);
+      }, (error) => {
+        console.error('Error fetching banks:', error)
+      }
+    )
   }
 
   // Method to save the transaction
