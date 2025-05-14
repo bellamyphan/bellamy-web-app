@@ -19,6 +19,10 @@ export class MainMenuComponent {
     window.location.href = '/money-transactions';
   }
 
+  showBanks(): void {
+    window.location.href = '/money-banks';
+  }
+
   addBank(): void {
     // Navigate to the bank create page
     window.location.href = 'money-banks/create';

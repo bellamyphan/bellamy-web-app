@@ -15,6 +15,7 @@ import { TransactionCreateComponent } from './component/transaction-create/trans
 import { SquareComponent } from './component/square/square.component';
 import { BoardComponent } from './component/board/board.component';
 import { BankCreateComponent } from './component/bank-create/bank-create.component';
+import { BankListComponent } from './component/bank-list/bank-list.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { BankCreateComponent } from './component/bank-create/bank-create.compone
     TransactionCreateComponent,
     SquareComponent,
     BoardComponent,
-    BankCreateComponent
+    BankCreateComponent,
+    BankListComponent
   ],
   imports: [
     BrowserModule, // Import BrowserModule for browser-specific features

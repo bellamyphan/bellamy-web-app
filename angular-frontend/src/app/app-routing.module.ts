@@ -8,6 +8,7 @@ import { TransactionListComponent } from './component/transaction-list/transacti
 import { TransactionCreateComponent } from './component/transaction-create/transaction-create.component';
 import { BoardComponent } from './component/board/board.component';
 import { BankCreateComponent } from './component/bank-create/bank-create.component';
+import { BankListComponent } from './component/bank-list/bank-list.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/main-menu', pathMatch: 'full' },
@@ -17,6 +18,7 @@ const routes: Routes = [
   { path: 'money-transactions', component: TransactionListComponent, canActivate: [authGuard] },
   { path: 'money-transactions/create', component: TransactionCreateComponent, canActivate: [authGuard] },
   { path: 'money-banks/create', component: BankCreateComponent, canActivate: [authGuard] },
+  { path: 'money-banks', component: BankListComponent, canActivate: [authGuard] },
   { path: 'tic-tac-toe', component: BoardComponent }
 ];
 
