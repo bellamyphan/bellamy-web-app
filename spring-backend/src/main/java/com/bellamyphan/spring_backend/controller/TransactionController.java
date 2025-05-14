@@ -3,12 +3,16 @@ package com.bellamyphan.spring_backend.controller;
 import com.bellamyphan.spring_backend.dto.TransactionDto;
 import com.bellamyphan.spring_backend.exception.ResourceNotFoundException;
 import com.bellamyphan.spring_backend.model.Transaction;
+import com.bellamyphan.spring_backend.model.User;
 import com.bellamyphan.spring_backend.repository.TransactionRepository;
+import com.bellamyphan.spring_backend.repository.UserRepository;
 import com.bellamyphan.spring_backend.service.DtoMapperService;
 import com.bellamyphan.spring_backend.service.TransactionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -24,11 +28,17 @@ public class TransactionController {
     private final TransactionRepository transactionRepository;
     private final TransactionService transactionService;
     private final DtoMapperService dtoMapperService;
+    private final UserRepository userRepository;
 
     // Get all transactions
     @GetMapping
-    public List<Transaction> getAllTransactions() {
-        return transactionRepository.findAll();
+    public List<Transaction> getAllTransactionsByUserId() {
+        // Get user id by the token
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Cannot find the user with username: " + username));
+        Long userId = user.getId();
+        return transactionRepository.findAllByUserIdWithDetails(userId);
     }
 
     // Get a transaction by ID
