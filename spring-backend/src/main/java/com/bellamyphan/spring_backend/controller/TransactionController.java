@@ -30,15 +30,20 @@ public class TransactionController {
     private final DtoMapperService dtoMapperService;
     private final UserRepository userRepository;
 
-    // Get all transactions
+    // Get all transactions by authenticated user
     @GetMapping
-    public List<Transaction> getAllTransactionsByUserId() {
-        // Get user id by the token
+    public ResponseEntity<List<TransactionDto>> getAllTransactionsByUserId() {
+        // Get user by the jwt token
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Cannot find the user with username: " + username));
-        Long userId = user.getId();
-        return transactionRepository.findAllByUserIdWithDetails(userId);
+        // Get transactions by user id
+        List<Transaction> transactions = transactionRepository.findAllByUserIdWithDetails(user.getId());
+        // Map to DTOs
+        List<TransactionDto> transactionDtos = transactions.stream()
+                .map(dtoMapperService::transactionMappingToDto)
+                .toList();
+        return ResponseEntity.ok(transactionDtos);
     }
 
     // Get a transaction by ID
