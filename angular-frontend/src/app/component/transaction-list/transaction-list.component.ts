@@ -26,6 +26,7 @@ export class TransactionListComponent {
     this.transactionService.loadSampleTransaction().subscribe({
       next: (data) => {
         console.log('Sample transactions loaded:', data);
+        this.transactionDtos$ = this.transactionService.getTransactions();
       },
       error: (err) => {
         console.error('Failed to load sample transactions', err);
