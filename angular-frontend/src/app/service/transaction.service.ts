@@ -14,6 +14,11 @@ export class TransactionService {
 
   constructor(private httpClient: HttpClient) { }
 
+  loadSampleTransaction(): Observable<Transaction[]> {
+    const url = `${this.transactionsUrl}/sample`;
+    return this.httpClient.post<Transaction[]>(url, {}); // POST with empty body
+  }
+
   getTransactions(): Observable<Transaction[]> { // Fetch all transactions from the API
     return this.httpClient.get<Transaction[]>(this.transactionsUrl);
   }

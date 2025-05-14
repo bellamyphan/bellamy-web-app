@@ -55,7 +55,11 @@ export class TransactionCreateComponent implements OnInit {
 
   // Navigate to transaction list
   goToTransactionList() {
-    this.router.navigate(['/transactions']);
+    this.router.navigate(['/money-transactions']);
+  }
+
+  goBack() {
+    this.router.navigate(['/money-transactions']);
   }
 
   // Method called when the form is submitted

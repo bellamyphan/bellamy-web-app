@@ -22,6 +22,17 @@ export class TransactionListComponent {
     this.transactions$ = this.transactionService.getTransactions(); // Assign Observable to the component property
   }
 
+  loadSampleTransaction() {
+    this.transactionService.loadSampleTransaction().subscribe({
+      next: (data) => {
+        console.log('Sample transactions loaded:', data);
+      },
+      error: (err) => {
+        console.error('Failed to load sample transactions', err);
+      }
+    });
+  }
+
   updateTransaction(id: number) {
     this.router.navigate(['transactions', id, 'update']); // Navigate to the update route with the transaction ID
   }

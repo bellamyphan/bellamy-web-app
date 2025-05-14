@@ -36,7 +36,7 @@
                 <!-- Bank Field -->
                 <div class="form-group mb-4">
                     <label for="bank" class="font-weight-bold">Bank</label>
-                    <input class="form-control form-control-lg" type="text" id="bank" name="bank" [(ngModel)]="transaction.bank" required />
+                    <input class="form-control form-control-lg" type="text" id="bank" name="bank" [(ngModel)]="transaction.bank" />
                 </div>
 
                 <!-- Notes Field -->
@@ -45,10 +45,11 @@
                     <textarea class="form-control form-control-lg" id="notes" name="notes" [(ngModel)]="transaction.notes" rows="4"></textarea>
                 </div>
 
-                <!-- Submit Button -->
-                <button class="btn btn-primary btn-block btn-lg" type="submit" [disabled]="!transactionForm.form.valid">
-                    Submit
-                </button>
+                <!-- Buttons Section -->
+                <div class="d-flex justify-content-between">
+                    <button class="btn btn-secondary btn-lg" type="button" (click)="goBack()">Back</button>
+                    <button class="btn btn-primary btn-lg" type="submit" [disabled]="!transactionForm.form.valid">Submit</button>
+                </div>
             </form>
         </div>
     </div>
