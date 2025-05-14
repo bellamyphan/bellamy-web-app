@@ -14,7 +14,7 @@ export class MainMenuComponent {
     window.location.href = '/user-registration';
   }
 
-  moneyApp(): void {
+  viewTransactions(): void {
     // Navigate to the user registration page
     window.location.href = '/money-transactions';
   }
