@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Bank, BankType } from '../../model/bank';
+import { BankService } from '../../service/bank.service';
 
 @Component({
   selector: 'app-bank-create',
@@ -7,7 +8,8 @@ import { Bank, BankType } from '../../model/bank';
   templateUrl: './bank-create.component.html',
   styleUrl: './bank-create.component.css'
 })
-export class BankCreateComponent {
+export class BankCreateComponent implements OnInit {
+
   bank: Bank = {
     id: 0,
     name: '',
@@ -15,11 +17,16 @@ export class BankCreateComponent {
     type: {} as BankType
   };
 
-  bankTypes: BankType[] = [
-    { id: 1, type: 'Retail' },
-    { id: 2, type: 'Commercial' },
-    { id: 3, type: 'Investment' }
-  ];
+  bankTypes: BankType[] = []; // Array to store bank types
+
+  constructor(
+    private bankService: BankService
+  ) {}
+
+  ngOnInit() {
+    // Load transaction types
+    this.loadBankTypes();
+  }
 
   onSubmit(): void {
     // You'd usually send this data to a backend via a service
@@ -30,5 +37,19 @@ export class BankCreateComponent {
 
   goBack(): void {
     window.location.href = '/main-menu';
+  }
+
+  // Load transaction types from the service
+  loadBankTypes() {
+    this.bankService.getBankTypes().subscribe(
+      (types: BankType[]) => {
+        console.log('Fetched bank types:', types); // Print fetched types
+        this.bankTypes = types;
+        console.log('Assigned transaction types:', this.bankTypes); // Print assigned transaction types
+      },
+      (error) => {
+        console.error('Error fetching transaction types:', error);
+      }
+    );
   }
 }
