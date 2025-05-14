@@ -19,6 +19,11 @@ export class MainMenuComponent {
     window.location.href = '/money-transactions';
   }
 
+  addBank(): void {
+    // Navigate to the bank create page
+    window.location.href = 'money-banks/create';
+  }
+
   tickTacToe() {
     // Navigate to the tic tac toe game
     window.location.href = '/tic-tac-toe';
