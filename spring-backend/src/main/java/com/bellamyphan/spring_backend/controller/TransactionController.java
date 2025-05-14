@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -44,6 +45,18 @@ public class TransactionController {
         Transaction createdTransaction = transactionService.createTransaction(transaction);
         TransactionDto dto = dtoMapperService.transactionMappingToDto(createdTransaction);
         return ResponseEntity.status(HttpStatus.CREATED).body(dto);
+    }
+
+    // Create some sample transactions per request of user
+    @PostMapping("/sample")
+    public ResponseEntity<List<TransactionDto>> createSampleTransaction() {
+        List<Transaction> transactions = transactionService.createSampleTransactions();
+        List<TransactionDto> transactionDtos = new LinkedList<>();
+        for (Transaction transaction : transactions) {
+            TransactionDto dto = dtoMapperService.transactionMappingToDto(transaction);
+            transactionDtos.add(dto);
+        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(transactionDtos);
     }
 
     // Update a transaction by ID
