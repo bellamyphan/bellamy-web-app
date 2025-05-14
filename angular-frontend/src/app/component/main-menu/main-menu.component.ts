@@ -18,6 +18,11 @@ export class MainMenuComponent {
     window.location.href = '/money-transactions';
   }
 
+  tickTacToe() {
+    // Navigate to the tic tac toe game
+    window.location.href = '/tic-tac-toe';
+  }
+
   sendEmail(): void {
     const subject = 'Hello Bellamy from the Bellamy Web App';
     const body = 'I hope you are doing well. This is a test email from the Bellamy Web App.';

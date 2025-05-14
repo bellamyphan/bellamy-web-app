@@ -6,6 +6,7 @@ import { UserRegistrationComponent } from './component/user-registration/user-re
 import { UserLoginComponent } from './component/user-login/user-login.component';
 import { TransactionListComponent } from './component/transaction-list/transaction-list.component';
 import { TransactionCreateComponent } from './component/transaction-create/transaction-create.component';
+import { BoardComponent } from './component/board/board.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/main-menu', pathMatch: 'full' },
@@ -13,7 +14,8 @@ const routes: Routes = [
   { path: 'user-login', component: UserLoginComponent },
   { path: 'user-registration', component: UserRegistrationComponent },
   { path: 'money-transactions', component: TransactionListComponent, canActivate: [authGuard] },
-  { path: 'money-transactions/create', component: TransactionCreateComponent, canActivate: [authGuard] }
+  { path: 'money-transactions/create', component: TransactionCreateComponent, canActivate: [authGuard] },
+  { path: 'tic-tac-toe', component: BoardComponent }
 ];
 
 @NgModule({
