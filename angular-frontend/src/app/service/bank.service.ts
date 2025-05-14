@@ -2,19 +2,24 @@ import { Injectable } from '@angular/core';
 import { AppConfig } from '../app-config';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { BankType } from '../model/bank';
+import { Bank, BankType } from '../model/bank';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BankService {
 
-  private baseUrl = AppConfig.springApiUrl; // Base URL for the API
-  private bankTypeUrl = `${this.baseUrl}/api/banks/types`; // URL for bank types endpoint
+  private baseUrl = AppConfig.springApiUrl;
+  private bankUrl = `${this.baseUrl}/api/banks`;
+  private bankTypeUrl = `${this.baseUrl}/api/banks/types`;
 
-  constructor(private http: HttpClient) { }
+  constructor(private httpClient: HttpClient) { }
 
   getBankTypes(): Observable<BankType[]> {
-    return this.http.get<BankType[]>(`${this.bankTypeUrl}`);
+    return this.httpClient.get<BankType[]>(`${this.bankTypeUrl}`);
   }
+
+  createBank(bank: Bank): Observable<Bank> { // Create a new bank
+      return this.httpClient.post<Bank>(this.bankUrl, bank);
+    }
 }

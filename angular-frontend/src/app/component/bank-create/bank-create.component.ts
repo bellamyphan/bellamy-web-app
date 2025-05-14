@@ -30,7 +30,16 @@ export class BankCreateComponent implements OnInit {
 
   onSubmit(): void {
     // You'd usually send this data to a backend via a service
-    console.log('Bank created:', this.bank);
+    this.bankService.createBank(this.bank).subscribe({
+      next: (createdBank) => {
+        console.log('Bank created:', createdBank);
+        alert('Bank created successfully!');  // Success alert
+      },
+      error: (err) => {
+        console.error('Error creating bank:', err);
+        alert('There was an error creating the bank. Please try again.');  // Error alert
+      }
+    });
     // Simulate navigation after submission
     this.goBack();
   }
