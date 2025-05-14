@@ -3,16 +3,12 @@ package com.bellamyphan.spring_backend.controller;
 import com.bellamyphan.spring_backend.dto.TransactionDto;
 import com.bellamyphan.spring_backend.exception.ResourceNotFoundException;
 import com.bellamyphan.spring_backend.model.Transaction;
-import com.bellamyphan.spring_backend.model.User;
 import com.bellamyphan.spring_backend.repository.TransactionRepository;
-import com.bellamyphan.spring_backend.repository.UserRepository;
 import com.bellamyphan.spring_backend.service.DtoMapperService;
 import com.bellamyphan.spring_backend.service.TransactionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -28,21 +24,11 @@ public class TransactionController {
     private final TransactionRepository transactionRepository;
     private final TransactionService transactionService;
     private final DtoMapperService dtoMapperService;
-    private final UserRepository userRepository;
 
     // Get all transactions by authenticated user
     @GetMapping
     public ResponseEntity<List<TransactionDto>> getAllTransactionsByUserId() {
-        // Get user by the jwt token
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("Cannot find the user with username: " + username));
-        // Get transactions by user id
-        List<Transaction> transactions = transactionRepository.findAllByUserIdWithDetails(user.getId());
-        // Map to DTOs
-        List<TransactionDto> transactionDtos = transactions.stream()
-                .map(dtoMapperService::transactionMappingToDto)
-                .toList();
+        List<TransactionDto> transactionDtos = transactionService.getTransactionsByAuthenticatedUser();
         return ResponseEntity.ok(transactionDtos);
     }
 

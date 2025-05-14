@@ -1,5 +1,6 @@
 package com.bellamyphan.spring_backend.service;
 
+import com.bellamyphan.spring_backend.dto.TransactionDto;
 import com.bellamyphan.spring_backend.model.*;
 import com.bellamyphan.spring_backend.repository.*;
 import jakarta.transaction.Transactional;
@@ -26,6 +27,7 @@ public class TransactionService {
     private final TransactionTypeRepository transactionTypeRepository;
     private final BankRepository bankRepository;
     private final BankService bankService;
+    private final DtoMapperService dtoMapperService;
 
     public Transaction createTransaction(Transaction transaction) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -77,7 +79,16 @@ public class TransactionService {
         return transactions;
     }
 
-//    public List<TransactionDto> getTransactionsByUserId() {
-//
-//    }
+    public List<TransactionDto> getTransactionsByAuthenticatedUser() {
+        // Get user by the jwt token
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Cannot find the user with username: " + username));
+        // Get transactions by user id
+        List<Transaction> transactions = transactionRepository.findAllByUserIdWithDetails(user.getId());
+        // Map to DTOs
+        return transactions.stream()
+                .map(dtoMapperService::transactionMappingToDto)
+                .toList();
+    }
 }
