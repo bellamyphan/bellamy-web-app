@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { Transaction } from '../../model/transaction';
 import { TransactionService } from '../../service/transaction.service';
 import { firstValueFrom, Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { TransactionDto } from '../../model/transactionDto';
 
 @Component({
   selector: 'app-transaction-list',
@@ -12,14 +12,14 @@ import { Router } from '@angular/router';
 })
 export class TransactionListComponent {
 
-  transactions$!: Observable<Transaction[]>; // Declare an Observable for transactions
+  transactionDtos$!: Observable<TransactionDto[]>; // Declare an Observable for transactions
 
   constructor(
     private transactionService: TransactionService, 
     private router: Router) { }
 
   ngOnInit(): void {
-    this.transactions$ = this.transactionService.getTransactions(); // Assign Observable to the component property
+    this.transactionDtos$ = this.transactionService.getTransactions(); // Assign Observable to the component property
   }
 
   loadSampleTransaction() {
@@ -50,7 +50,7 @@ export class TransactionListComponent {
       if (response.deleted) {
         console.log('Transaction deleted successfully');
         // Reload the transactions list or update the view after deletion
-        this.transactions$ = this.transactionService.getTransactions();
+        this.transactionDtos$ = this.transactionService.getTransactions();
       } else {
         console.error('Failed to delete transaction: Unknown error');
       }

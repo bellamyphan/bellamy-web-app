@@ -14,7 +14,7 @@
 </div>
 
 <!-- Show loading text until the data is available -->
-<div *ngIf="!(transactions$ | async); else dataLoaded">
+<div *ngIf="!(transactionDtos$ | async); else dataLoaded">
     <p>Loading transactions...</p>
 </div>
 
@@ -31,10 +31,10 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let transaction of transactions$ | async">
+                <tr *ngFor="let transaction of transactionDtos$ | async">
                     <td>{{ transaction.date | date }}</td>
                     <td>{{ transaction.amount | currency }}</td>
-                    <td>{{ transaction.type }}</td>
+                    <td>{{ transaction.typeName }}</td>
                     <td>{{ transaction.notes }}</td>
                     <td>
                         <button class="btn btn-info" (click)="viewTransactionDetails(transaction.id)"

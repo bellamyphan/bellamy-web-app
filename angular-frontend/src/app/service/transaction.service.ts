@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Transaction } from '../model/transaction';
 import { Observable } from 'rxjs';
 import { AppConfig } from '../app-config';
+import { TransactionDto } from '../model/transactionDto';
 
 @Injectable({
   providedIn: 'root'
@@ -19,8 +20,8 @@ export class TransactionService {
     return this.httpClient.post<Transaction[]>(url, {}); // POST with empty body
   }
 
-  getTransactions(): Observable<Transaction[]> { // Fetch all transactions from the API
-    return this.httpClient.get<Transaction[]>(this.transactionsUrl);
+  getTransactions(): Observable<TransactionDto[]> { // Fetch all transactions from the API
+    return this.httpClient.get<TransactionDto[]>(this.transactionsUrl);
   }
 
   getTransactionById(id: number): Observable<Transaction> { // Fetch a transaction by ID
