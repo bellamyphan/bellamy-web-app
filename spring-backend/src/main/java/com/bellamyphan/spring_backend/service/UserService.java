@@ -41,6 +41,11 @@ public class UserService implements UserDetailsService {
     @Value("${default.admin.lastname}")
     private String defaultAdminLastname;
 
+    public User findByUserName(String username) {
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Cannot find the user with username: " + username));
+    }
+
     @Transactional
     public User saveUser(User user) {
         if (userRepository.findByUsername(user.getUsername()).isPresent()) {
